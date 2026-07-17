@@ -1,0 +1,1 @@
+"module.exports = {\n  plugins: {\n    '@tailwindcss/postcss': {},\n  },\n};\n"

@@ -1,0 +1,1 @@
+"'use client';\n\nimport { SessionProvider } from 'next-auth/react';\n\nexport function AuthProvider({ children, session }) {\n  return (\n    <SessionProvider session={session}>\n      {children}\n    </SessionProvider>\n  );\n}\n"

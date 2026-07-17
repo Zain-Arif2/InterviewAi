@@ -1,0 +1,1 @@
+"/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  output: 'standalone',\n  images: {\n    remotePatterns: [\n      {\n        protocol: 'https',\n        hostname: '**',\n      },\n    ],\n  },\n  experimental: {\n    serverActions: {\n      bodySizeLimit: '2mb',\n    },\n  },\n};\n\nexport default nextConfig;\n"

@@ -1,1 +1,0 @@
-"'use client';\n\nimport { ThemeProvider as NextThemesProvider } from 'next-themes';\n\nexport function ThemeProvider({ children, ...props }) {\n  return (\n    <NextThemesProvider\n      attribute=\"class\"\n      defaultTheme=\"dark\"\n      enableSystem\n      disableTransitionOnChange={false}\n      {...props}\n    >\n      {children}\n    </NextThemesProvider>\n  );\n}\n"

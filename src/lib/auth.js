@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import authConfig from '@/lib/auth.config';
 import { authenticateUser } from '@/services/auth.service';
 import { SESSION_MAX_AGE } from '@/lib/constants';
 
@@ -9,6 +10,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       name: 'credentials',
@@ -21,24 +23,21 @@ export const {
           return null;
         }
 
-        const user = await authenticateUser(
-          credentials.email,
-          credentials.password
-        );
+        const user = await authenticateUser({
+          email: credentials.email,
+          password: credentials.password,
+        });
 
         return user;
       },
     }),
   ],
-  pages: {
-    signIn: '/login',
-    error: '/login',
-  },
   session: {
     strategy: 'jwt',
     maxAge: SESSION_MAX_AGE,
   },
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user, trigger, session }) {
       // Initial sign in — attach user fields to token
       if (user) {
@@ -66,17 +65,6 @@ export const {
         session.user.emailVerified = token.emailVerified;
       }
       return session;
-    },
-    async authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isAuthPage = ['/login', '/register', '/verify-email', '/forgot-password', '/reset-password'].some(path => nextUrl.pathname.startsWith(path));
-      
-      if (isAuthPage) {
-        if (isLoggedIn) return Response.redirect(new URL('/dashboard', nextUrl));
-        return true;
-      }
-
-      return isLoggedIn;
     },
   },
 });

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { verifyEmailAction, resendOTPAction } from '@/actions/auth.actions';
+import { verifyEmailAction, resendVerificationOTPAction } from '@/actions/auth.actions';
 import { toast } from 'sonner';
 import { Loader2, Mail, ArrowRight, RotateCcw } from 'lucide-react';
 
@@ -70,8 +70,7 @@ function VerifyEmailForm() {
 
     setIsLoading(true);
     try {
-      const result = await verifyEmailAction({ email, code });
-      if (result.success) {
+const result = await verifyEmailAction({ email, otp: code });      if (result.success) {
         toast.success('Email verified successfully! Welcome.');
         router.push('/dashboard');
         router.refresh();
@@ -90,8 +89,8 @@ function VerifyEmailForm() {
 
     setIsResending(true);
     try {
-      const result = await resendOTPAction({ email });
-      if (result.success) {
+const result = await resendVerificationOTPAction({ email });
+        if (result.success) {
         toast.success('A new verification code has been sent!');
         setCountdown(60); // 60 seconds cooldown lock
       } else {

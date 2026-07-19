@@ -1,1 +1,58 @@
-"export default function DashboardLoading() {\n  return (\n    <div className=\"space-y-8 animate-pulse\">\n      {/* Header skeleton */}\n      <div>\n        <div className=\"h-7 w-48 rounded-lg skeleton mb-2\" />\n        <div className=\"h-4 w-72 rounded-lg skeleton\" />\n      </div>\n\n      {/* Stats skeleton */}\n      <div className=\"grid gap-4 sm:grid-cols-2 lg:grid-cols-4\">\n        {[...Array(4)].map((_, i) => (\n          <div\n            key={i}\n            className=\"rounded-2xl p-5\"\n            style={{ background: 'var(--card)', border: '1px solid var(--border)' }}\n          >\n            <div className=\"h-10 w-10 rounded-xl skeleton mb-3\" />\n            <div className=\"h-7 w-16 rounded-lg skeleton mb-1\" />\n            <div className=\"h-4 w-28 rounded-lg skeleton\" />\n          </div>\n        ))}\n      </div>\n\n      {/* Content skeleton */}\n      <div className=\"grid gap-6 lg:grid-cols-3\">\n        <div className=\"rounded-2xl p-6 h-64 skeleton\" />\n        <div className=\"lg:col-span-2 rounded-2xl p-6 h-64\" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>\n          <div className=\"h-5 w-40 rounded-lg skeleton mb-4\" />\n          <div className=\"space-y-3\">\n            {[...Array(3)].map((_, i) => (\n              <div key={i} className=\"h-14 rounded-xl skeleton\" />\n            ))}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+export default function DashboardLoading() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      {/* Header skeleton */}
+      <div>
+        <div className="h-7 w-48 rounded-lg mb-2" style={{ background: 'var(--border)' }} />
+        <div className="h-4 w-72 rounded-lg" style={{ background: 'var(--border)' }} />
+      </div>
+
+      {/* Stats skeleton */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="rounded-2xl p-5 flex flex-col justify-between h-[134px]"
+            style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="h-4 w-28 rounded-lg" style={{ background: 'var(--border)' }} />
+              <div className="h-9 w-9 rounded-xl" style={{ background: 'var(--border)' }} />
+            </div>
+            <div className="h-8 w-16 rounded-lg" style={{ background: 'var(--border)' }} />
+          </div>
+        ))}
+      </div>
+
+      {/* Content skeleton - Matches the 2-column action/activity layout */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Quick Action Skeleton */}
+        <div 
+          className="rounded-2xl p-6 h-[220px] flex flex-col justify-between"
+          style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
+        >
+          <div>
+            <div className="h-5 w-40 rounded-lg mb-3" style={{ background: 'var(--border)' }} />
+            <div className="space-y-2">
+              <div className="h-4 w-full rounded-lg" style={{ background: 'var(--border)' }} />
+              <div className="h-4 w-[90%] rounded-lg" style={{ background: 'var(--border)' }} />
+            </div>
+          </div>
+          <div className="h-10 w-36 rounded-xl" style={{ background: 'var(--border)' }} />
+        </div>
+
+        {/* Recent Activity Skeleton */}
+        <div 
+          className="rounded-2xl p-6 h-[220px] flex flex-col"
+          style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
+        >
+          <div className="h-5 w-32 rounded-lg mb-6" style={{ background: 'var(--border)' }} />
+          <div className="flex flex-col items-center justify-center flex-1">
+            <div className="h-8 w-8 rounded-full mb-2" style={{ background: 'var(--border)' }} />
+            <div className="h-4 w-64 rounded-lg" style={{ background: 'var(--border)' }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

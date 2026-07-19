@@ -1,13 +1,13 @@
 'use server';
-
 import { signIn, signOut } from '@/lib/auth';
 import {
   registerUser,
   verifyEmail,
-  resendVerificationOTP,
-  forgotPassword,
+  resendVerificationEmailToken,
+  requestPasswordReset,
   resetPassword,
 } from '@/services/auth.service';
+
 import {
   registerSchema,
   loginSchema,
@@ -101,8 +101,7 @@ export async function verifyEmailAction(formData) {
         return actionResponse(false, null, validation.error.errors[0].message);
       }
 
-      const result = await verifyEmail(validation.data);
-      return result.success
+const result = await verifyEmail(validation.data.email, validation.data.otp);      return result.success
         ? actionResponse(true, result.data)
         : actionResponse(false, null, result.error);
     } catch (error) {
@@ -122,7 +121,7 @@ export async function resendVerificationOTPAction(email) {
         return actionResponse(false, null, 'Email address is required.');
       }
 
-      const result = await resendVerificationOTP(email);
+const result = await resendVerificationEmailToken(email);
       return result.success
         ? actionResponse(true, result.data)
         : actionResponse(false, null, result.error);
@@ -144,8 +143,7 @@ export async function forgotPasswordAction(formData) {
         return actionResponse(false, null, validation.error.errors[0].message);
       }
 
-      const result = await forgotPassword(validation.data.email);
-      return result.success
+const result = await requestPasswordReset(validation.data.email);      return result.success
         ? actionResponse(true, result.data)
         : actionResponse(false, null, result.error);
     } catch (error) {
@@ -166,8 +164,7 @@ export async function resetPasswordAction(formData) {
         return actionResponse(false, null, validation.error.errors[0].message);
       }
 
-      const result = await resetPassword(validation.data);
-      return result.success
+const result = await resetPassword(validation.data.email, validation.data.otp, validation.data.password);      return result.success
         ? actionResponse(true, result.data)
         : actionResponse(false, null, result.error);
     } catch (error) {

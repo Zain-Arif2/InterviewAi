@@ -18,7 +18,7 @@ export async function authenticateUser({ email, password }) {
   const sanitizedEmail = sanitizeInput(email);
 
   // Find user by email
-  const user = await User.findOne({ email: sanitizedEmail });
+const user = await User.findOne({ email: sanitizedEmail }).select('+password');
   if (!user || !user.password) {
     return null;
   }

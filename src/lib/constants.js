@@ -32,7 +32,8 @@ export const PLANS = {
   FREE: 'free',
   PRO: 'pro',
 };
-
+// How many questions the AI asks before generating the final report
+export const QUESTIONS_PER_INTERVIEW = 6;
 export const PLAN_LIMITS = {
   [PLANS.FREE]: {
     interviewsPerMonth: 5,

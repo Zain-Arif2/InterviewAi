@@ -11,109 +11,41 @@ export const metadata = {
 
 export default async function ProfilePage() {
   const session = await auth();
-  const userResult = await getUserById(session?.user?.id);
-  const user = userResult?.data;
+  const userResult = await getUserById(session.user.id);
+  const user = userResult.data;
 
   return (
-    <div className="max-w-3xl space-y-8">
-      {/* Page Header */}
+    <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
-          Profile
-        </h1>
-        <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>
-          Manage your personal information and preferences
-        </p>
+        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Profile</h1>
+        <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>Manage your personal information and account.</p>
       </div>
 
-      {/* Profile Card */}
-      <div
-        className="rounded-2xl overflow-hidden"
-        style={{
-          background: 'var(--card)',
-          border: '1px solid var(--border)',
-        }}
-      >
-        {/* Banner */}
-        <div
-          className="h-24"
-          style={{
-            background: 'linear-gradient(135deg, #312e81, #4338ca, #6366f1)',
-          }}
-        />
-        <div className="px-6 pb-6">
-          {/* Avatar & Basic Info */}
-          <div className="flex items-end gap-4 -mt-10 mb-6">
-            <div
-              className="h-20 w-20 rounded-2xl flex items-center justify-center text-2xl font-bold text-white shadow-md"
-              style={{
-                background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-                border: '4px solid var(--card)',
-              }}
-            >
-              {user?.name?.charAt(0)?.toUpperCase() || 'U'}
-            </div>
-            <div className="mb-1">
-              <h2 className="text-lg font-bold flex items-center gap-2" style={{ color: 'var(--foreground)' }}>
-                {user?.name || 'User'}
-                {user?.role === 'premium' && (
-                  <Crown className="h-4 w-4 text-amber-500 fill-amber-500" />
-                )}
-              </h2>
-              <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
-                {user?.email}
-              </p>
-            </div>
-          </div>
-
-          {/* Form Header */}
-          <div className="flex items-center gap-3 mb-6 pt-2">
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl"
-              style={{ background: 'var(--muted)' }}
-            >
-              <User className="h-5 w-5" style={{ color: 'var(--primary)' }} />
-            </div>
-            <div>
-              <h3 className="text-base font-semibold" style={{ color: 'var(--foreground)' }}>
-                Personal Information
-              </h3>
-              <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
-                Update your name and account details
-              </p>
-            </div>
-          </div>
-
-          {/* Hydrated Profile Form */}
-          <ProfileForm user={user} />
+      <div className="flex items-center gap-3 rounded-2xl p-4" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: 'var(--color-primary-50)' }}>
+          <Crown className="h-5 w-5" style={{ color: 'var(--color-primary-500)' }} />
+        </div>
+        <div>
+          <p className="text-sm font-semibold capitalize" style={{ color: 'var(--foreground)' }}>{user?.subscription?.plan || 'free'} Plan</p>
+          <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
+            {user?.subscription?.plan === 'pro' ? 'Unlimited interviews' : 'Limited interviews per month'}
+          </p>
         </div>
       </div>
 
-      {/* Change Password Card */}
-      <div
-        className="rounded-2xl p-6"
-        style={{
-          background: 'var(--card)',
-          border: '1px solid var(--border)',
-        }}
-      >
-        <div className="flex items-center gap-3 mb-6">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-xl"
-            style={{ background: 'var(--muted)' }}
-          >
-            <Lock className="h-5 w-5" style={{ color: 'var(--primary)' }} />
-          </div>
-          <div>
-            <h3 className="text-base font-semibold" style={{ color: 'var(--foreground)' }}>
-              Security
-            </h3>
-            <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
-              Update your password to secure your account
-            </p>
-          </div>
+      <div className="rounded-2xl p-6" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+        <div className="mb-5 flex items-center gap-2">
+          <User className="h-4 w-4" style={{ color: 'var(--foreground)' }} />
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>Personal Information</h2>
         </div>
+        <ProfileForm user={user} />
+      </div>
 
+      <div className="rounded-2xl p-6" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+        <div className="mb-5 flex items-center gap-2">
+          <Lock className="h-4 w-4" style={{ color: 'var(--foreground)' }} />
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>Change Password</h2>
+        </div>
         <ChangePasswordForm />
       </div>
     </div>

@@ -28,7 +28,9 @@ const user = await User.findOne({ email: sanitizedEmail }).select('+password');
   if (!isPasswordValid) {
     return null;
   }
-
+if (user.isDisabled) {
+  throw new Error('This account has been disabled. Please contact support.');
+}
   // NextAuth expects an object containing user attributes
   return {
     id: user._id.toString(),

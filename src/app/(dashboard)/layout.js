@@ -3,17 +3,26 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, Settings, X, Menu, GraduationCap } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { LayoutDashboard, MessageSquare, BarChart3, CreditCard, Settings, ShieldCheck, X, Menu, GraduationCap } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 
 const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Resumes', href: '/dashboard/resumes', icon: FileText },
+  { name: 'Interviews', href: '/dashboard/interviews', icon: MessageSquare },
+  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
+  { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
+const adminNavItem = { name: 'Admin', href: '/dashboard/admin', icon: ShieldCheck };
+
 export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.role === 'admin';
+
+  const items = isAdmin ? [...navigationItems, adminNavItem] : navigationItems;
 
   const sidebarClasses = `
     fixed inset-y-0 left-0 z-40 flex flex-col border-r transition-all duration-300
@@ -53,7 +62,7 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }) {
         </div>
 
         <nav className="flex-1 space-y-1 p-3 overflow-y-auto">
-          {navigationItems.map((item) => {
+          {items.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
 

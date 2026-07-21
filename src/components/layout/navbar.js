@@ -169,7 +169,7 @@ export function Navbar({ onMenuClick, sidebarCollapsed }) {
                 className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-[var(--destructive-muted,var(--muted))] text-[var(--destructive,calc(var(--foreground)))]"
               >
                 <LogOut className="h-4 w-4" />
-                Sign out
+                Sign outt
               </button>
             </div>
           )}

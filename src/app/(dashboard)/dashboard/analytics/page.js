@@ -1,10 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import dynamic from 'next/dynamic';
 import { TrendingUp, TrendingDown, Minus, Loader2 } from 'lucide-react';
 import { getAnalyticsAction } from '@/actions/interview.actions';
 
+const ProgressChart = dynamic(() => import('./progress-chart'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[300px] items-center justify-center">
+      <Loader2 className="h-5 w-5 animate-spin" style={{ color: 'var(--color-primary-500)' }} />
+    </div>
+  ),
+});
 export default function AnalyticsPage() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,23 +56,10 @@ export default function AnalyticsPage() {
         <ImprovementCard label="Communication Improvement" value={data.communicationImprovement} />
       </div>
 
-      <div className="rounded-2xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
-        <h2 className="text-base font-semibold mb-4" style={{ color: 'var(--foreground)' }}>Score Progress</h2>
-        <div style={{ width: '100%', height: 300 }}>
-          <ResponsiveContainer>
-            <LineChart data={data.progress}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-              <XAxis dataKey="label" stroke="var(--muted-foreground)" fontSize={12} />
-              <YAxis domain={[0, 100]} stroke="var(--muted-foreground)" fontSize={12} />
-              <Tooltip contentStyle={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 12 }} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Line type="monotone" dataKey="overallScore" name="Overall" stroke="var(--color-primary-500)" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="technicalScore" name="Technical" stroke="var(--color-success-600)" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="communicationScore" name="Communication" stroke="var(--color-warning-600)" strokeWidth={2} dot={{ r: 3 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+    <div className="rounded-2xl p-5" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+  <h2 className="text-base font-semibold mb-4" style={{ color: 'var(--foreground)' }}>Score Progress</h2>
+  <ProgressChart data={data.progress} />
+</div>
     </div>
   );
 }

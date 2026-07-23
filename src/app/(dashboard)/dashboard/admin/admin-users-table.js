@@ -88,7 +88,7 @@ export default function AdminUsersTable() {
                     <select
                       value={user.subscription?.plan || 'free'}
                       onChange={(e) => handlePlanChange(user, e.target.value)}
-                      disabled={updatingId === user._id || user.role === 'admin'}
+                      disabled={updatingId === user._id}
                       className="rounded-lg px-2 py-1 text-xs outline-none"
                       style={{ background: 'var(--background)', border: '1px solid var(--border)', color: 'var(--foreground)' }}
                     >

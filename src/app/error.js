@@ -1,56 +1,35 @@
 'use client';
 
-import { AlertTriangle, RotateCcw, Home } from 'lucide-react';
-import Link from 'next/link';
+import { useEffect } from 'react';
+import { AlertTriangle, RotateCcw } from 'lucide-react';
 
-export default function GlobalError({ error, reset }) {
+export default function DashboardError({ error, reset }) {
+  useEffect(() => {
+    console.error('Dashboard error:', error);
+  }, [error]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center p-4" style={{ background: 'var(--background)' }}>
+    <div className="flex h-[60vh] flex-col items-center justify-center text-center">
       <div
-        className="w-full max-w-md rounded-2xl p-8 text-center animate-fade-in"
-        style={{
-          background: 'var(--card)',
-          border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-elevated)',
-        }}
+        className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl"
+        style={{ background: 'var(--color-danger-50)' }}
       >
-        <div
-          className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl"
-          style={{ background: 'var(--destructive)', opacity: 0.1 }}
-        >
-          <AlertTriangle className="h-7 w-7" style={{ color: 'var(--destructive)' }} />
-        </div>
-        <h2 className="mb-2 text-xl font-semibold" style={{ color: 'var(--foreground)' }}>
-          Something went wrong
-        </h2>
-        <p className="mb-6 text-sm" style={{ color: 'var(--muted-foreground)' }}>
-          {error?.message || 'An unexpected error occurred. Please try again.'}
-        </p>
-        <div className="flex gap-3 justify-center">
-          <button
-            onClick={reset}
-            className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 cursor-pointer"
-            style={{
-              background: 'var(--primary)',
-              color: 'var(--primary-foreground)',
-            }}
-          >
-            <RotateCcw className="h-4 w-4" />
-            Try Again
-          </button>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200"
-            style={{
-              background: 'var(--secondary)',
-              color: 'var(--secondary-foreground)',
-            }}
-          >
-            <Home className="h-4 w-4" />
-            Go Home
-          </Link>
-        </div>
+        <AlertTriangle className="h-6 w-6" style={{ color: 'var(--color-danger-600)' }} />
       </div>
+      <h2 className="text-lg font-semibold mb-1" style={{ color: 'var(--foreground)' }}>
+        Something went wrong
+      </h2>
+      <p className="text-sm mb-6 max-w-sm" style={{ color: 'var(--muted-foreground)' }}>
+        An unexpected error occurred while loading this page. You can try again, or head back to the dashboard.
+      </p>
+      <button
+        onClick={reset}
+        className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
+        style={{ background: 'linear-gradient(135deg, var(--gradient-start), var(--gradient-end))' }}
+      >
+        <RotateCcw className="h-4 w-4" />
+        Try again
+      </button>
     </div>
   );
 }

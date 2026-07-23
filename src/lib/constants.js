@@ -83,6 +83,7 @@ export const RATE_LIMITS = {
   AUTH: { requests: 5, window: '60s' },
   API: { requests: 30, window: '60s' },
   GENERAL: { requests: 100, window: '60s' },
+  AI: { requests: 20, window: '60s' },
 };
 
 // OTP expiry (15 minutes in milliseconds)

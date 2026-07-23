@@ -10,6 +10,7 @@ import {
   getAnalyticsData,
 } from '@/services/interview.service';
 import { checkInterviewLimit } from '@/services/subscription.service';
+import { checkRateLimit } from '@/services/rate-limit.service';
 import { createInterviewSchema, submitAnswerSchema } from '@/validators/interview.validator';
 import { actionResponse } from '@/lib/utils';
 
@@ -21,6 +22,10 @@ export async function createInterviewAction(formData) {
     const validation = createInterviewSchema.safeParse(formData);
     if (!validation.success) return actionResponse(false, null, validation.error.errors[0].message);
 
+    const rateLimit = await checkRateLimit(session.user.id, 'AI');
+    if (!rateLimit.success) {
+      return actionResponse(false, null, 'Too many requests. Please slow down and try again in a moment.');
+    }
     const limit = await checkInterviewLimit(session.user.id);
     if (!limit.allowed) {
       return actionResponse(false, null, `You've reached your free plan limit of ${limit.limit} interviews this month. Upgrade to Pro for unlimited interviews.`);
@@ -41,7 +46,10 @@ export async function submitAnswerAction(formData) {
 
     const validation = submitAnswerSchema.safeParse(formData);
     if (!validation.success) return actionResponse(false, null, validation.error.errors[0].message);
-
+    const rateLimit = await checkRateLimit(session.user.id, 'AI');
+    if (!rateLimit.success) {
+      return actionResponse(false, null, 'Too many requests. Please slow down and try again in a moment.');
+    }
     const result = await submitAnswer(validation.data.interviewId, session.user.id, validation.data.answer);
 
     return result.success

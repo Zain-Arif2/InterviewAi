@@ -26,7 +26,7 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
+          <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
             Welcome back, {session?.user?.name?.split(' ')[0] || 'there'} 👋
           </h1>
           <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>

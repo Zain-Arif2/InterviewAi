@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { LayoutDashboard, MessageSquare, BarChart3, CreditCard, Settings, ShieldCheck, X, Menu, GraduationCap } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, BarChart3, CreditCard, Settings, ShieldCheck, X, Menu, Mic, User } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 
 const navigationItems = [
@@ -12,6 +12,7 @@ const navigationItems = [
   { name: 'Interviews', href: '/dashboard/interviews', icon: MessageSquare },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
+  { name: 'Profile', href: '/dashboard/profile', icon: User },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
@@ -43,8 +44,11 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }) {
       <aside className={sidebarClasses}>
         <div className="flex h-16 items-center justify-between px-4 border-b border-[var(--border)]">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <GraduationCap className="h-4 w-4" />
+            <div
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+              style={{ background: 'linear-gradient(135deg, var(--gradient-start), var(--gradient-end))' }}
+            >
+              <Mic className="h-4 w-4 text-white" />
             </div>
             {!collapsed && (
               <span className="font-bold text-lg text-[var(--foreground)] whitespace-nowrap animate-fade-in">
@@ -72,8 +76,8 @@ export function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }) {
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors relative group`}
                 style={{
-                  backgroundColor: isActive ? 'var(--muted)' : 'transparent',
-                  color: isActive ? 'var(--foreground)' : 'var(--muted-foreground)',
+                  backgroundColor: isActive ? 'var(--sidebar-active)' : 'transparent',
+                  color: isActive ? 'var(--sidebar-active-text)' : 'var(--muted-foreground)',
                 }}
               >
                 <Icon className={`h-5 w-5 shrink-0 ${isActive ? 'text-primary' : ''}`} />

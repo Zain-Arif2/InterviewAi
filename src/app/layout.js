@@ -1,5 +1,5 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Inter, Space_Grotesk, IBM_Plex_Mono } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { AuthProvider } from '@/components/providers/auth-provider';
@@ -8,6 +8,18 @@ import { APP_NAME, APP_DESCRIPTION } from '@/lib/constants';
 
 const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-plex-mono',
 });
 
 export const metadata = {
@@ -34,13 +46,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen antialiased`}>
-        <AuthProvider>
-          <ThemeProvider>
-            {children}
-            <ToastProvider />
-          </ThemeProvider>
-        </AuthProvider>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} ${plexMono.variable} min-h-screen antialiased font-sans`}>        <AuthProvider>
+        <ThemeProvider>
+          {children}
+          <ToastProvider />
+        </ThemeProvider>
+      </AuthProvider>
       </body>
     </html>
   );

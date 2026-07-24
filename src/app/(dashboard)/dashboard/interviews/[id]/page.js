@@ -31,7 +31,7 @@ export default async function InterviewReportPage({ params }) {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>{interview.jobRole}</h1>
+        <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>{interview.jobRole}</h1>
         <p className="text-sm capitalize" style={{ color: 'var(--muted-foreground)' }}>
           {interview.type} interview · {interview.experienceLevel} level · {new Date(interview.createdAt).toLocaleDateString()}
         </p>

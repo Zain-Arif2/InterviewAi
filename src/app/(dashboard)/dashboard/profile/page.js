@@ -2,7 +2,8 @@ import { auth } from '@/lib/auth';
 import { getUserById } from '@/services/user.service';
 import { ProfileForm } from '@/components/profile/profile-form';
 import { ChangePasswordForm } from '@/components/profile/change-password-form';
-import { User, Lock, Crown } from 'lucide-react';
+import { ResumeUpload } from '@/components/profile/resume-upload';
+import { User, Lock, Crown, FileText } from 'lucide-react';
 
 export const metadata = {
   title: 'Profile',
@@ -17,7 +18,7 @@ export default async function ProfilePage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Profile</h1>
+        <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Profile</h1>
         <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>Manage your personal information and account.</p>
       </div>
 
@@ -39,6 +40,14 @@ export default async function ProfilePage() {
           <h2 className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>Personal Information</h2>
         </div>
         <ProfileForm user={user} />
+      </div>
+
+      <div className="rounded-2xl p-6" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+        <div className="mb-5 flex items-center gap-2">
+          <FileText className="h-4 w-4" style={{ color: 'var(--foreground)' }} />
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>Resume</h2>
+        </div>
+        <ResumeUpload />
       </div>
 
       <div className="rounded-2xl p-6" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>

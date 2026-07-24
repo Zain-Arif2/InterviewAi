@@ -1,11 +1,12 @@
 import connectDB from '@/lib/db';
 import Interview from '@/models/Interview';
+import User from '@/models/User';
 import { getAIProvider } from '@/lib/ai/ai-provider.factory';
 import { QUESTIONS_PER_INTERVIEW } from '@/lib/constants';
 
 const TYPE_LABELS = { hr: 'HR', technical: 'Technical', behavioral: 'Behavioral' };
 
-function buildSystemPrompt({ jobRole, experienceLevel, type, memoryContext }) {
+function buildSystemPrompt({ jobRole, experienceLevel, type, memoryContext, resumeContext }) {
   return `You are an experienced, friendly but professional interviewer conducting a ${TYPE_LABELS[type]} interview for a ${experienceLevel}-level ${jobRole} position.
 
 Rules:
@@ -15,6 +16,7 @@ Rules:
 - Do not repeat questions you've already asked.
 - Do not reveal scores or feedback during the conversation — that happens at the end.
 - Keep each message concise (2-4 sentences max), plain text, no markdown headers.
+${resumeContext ? `\nThe candidate's resume shows:\n${resumeContext}\nTailor your questions to their actual background where relevant — ask about specific skills or experience mentioned above rather than only generic questions.` : ''}
 ${memoryContext ? `\nContext from the candidate's last interview:\n${memoryContext}\nStart today's interview by briefly checking whether they've improved on their weak areas, then proceed with your first question.` : ''}`;
 }
 
@@ -36,7 +38,14 @@ export async function createInterview(userId, { jobRole, experienceLevel, type }
   await connectDB();
 
   const memoryContext = await getMemoryContext(userId);
-  const systemPrompt = buildSystemPrompt({ jobRole, experienceLevel, type, memoryContext });
+
+  const user = await User.findById(userId).select('resumeSummary');
+  const resume = user?.resumeSummary;
+  const resumeContext = resume?.skills?.length
+    ? `Skills: ${resume.skills.join(', ')}. ${resume.yearsOfExperience ? `~${resume.yearsOfExperience} years of experience. ` : ''}${resume.experienceSummary || ''}`
+    : null;
+
+  const systemPrompt = buildSystemPrompt({ jobRole, experienceLevel, type, memoryContext, resumeContext });
 
   const ai = getAIProvider();
   const firstQuestion = await ai.chat([

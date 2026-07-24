@@ -30,7 +30,7 @@ export default function InterviewsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Interviews</h1>
+          <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Interviews</h1>
           <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>View and manage your interview history</p>
         </div>
         <Link

@@ -18,7 +18,7 @@ export default async function BillingPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Billing</h1>
+        <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Billing</h1>
         <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>Manage your subscription plan.</p>
       </div>
 
@@ -54,8 +54,9 @@ function PlanCard({ name, price, current, highlighted, features }) {
     <div
       className="rounded-2xl p-5"
       style={{
-        background: highlighted ? 'var(--color-primary-50)' : 'var(--card)',
-        border: current ? '2px solid var(--color-primary-500)' : '1px solid var(--border)',
+        background: 'var(--card)',
+        border: highlighted ? '2px solid var(--color-primary-500)' : '1px solid var(--border)',
+        boxShadow: highlighted ? 'var(--shadow-glow)' : 'none',
       }}
     >
       <div className="mb-3 flex items-center justify-between">

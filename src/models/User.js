@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    resumeSummary: {
+      skills: { type: [String], default: [] },
+      experienceSummary: { type: String, default: '' },
+      yearsOfExperience: { type: Number, default: null },
+      fileName: { type: String, default: '' },
+      updatedAt: { type: Date, default: null },
+    },
     subscription: {
       plan: {
         type: String,

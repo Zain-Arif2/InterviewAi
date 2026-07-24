@@ -36,7 +36,7 @@ export default function NewInterviewPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Start a New Interview</h1>
+        <h1 className="font-display text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>Start a New Interview</h1>
         <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>Tell the AI a bit about the role you're preparing for.</p>
       </div>
 
